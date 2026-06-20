@@ -1,0 +1,66 @@
+{
+  "distribution": [
+    {
+      "star_rating": 2,
+      "star_category": "2-Star (Poor)",
+      "count": "2387",
+      "avg_srs": "34.8"
+    },
+    {
+      "star_rating": 3,
+      "star_category": "3-Star (Average)",
+      "count": "34908",
+      "avg_srs": "52.4"
+    },
+    {
+      "star_rating": 4,
+      "star_category": "4-Star (Good)",
+      "count": "46701",
+      "avg_srs": "66.2"
+    },
+    {
+      "star_rating": 5,
+      "star_category": "5-Star (Safe)",
+      "count": "11588",
+      "avg_srs": "86.1"
+    }
+  ],
+  "byRoadClass": [
+    {
+      "road_class": "Trunk_link",
+      "avg_stars": "3.0",
+      "avg_srs": "49.2",
+      "segment_count": "1944"
+    },
+    {
+      "road_class": "Primary_link",
+      "avg_stars": "3.2",
+      "avg_srs": "54.5",
+      "segment_count": "1172"
+    },
+    {
+      "road_class": "Secondary_link",
+      "avg_stars": "3.2",
+      "avg_srs": "54.9",
+      "segment_count": "692"
+    },
+    {
+      "road_class": "Secondary",
+      "avg_stars": "3.7",
+      "avg_srs": "62.2",
+      "segment_count": "59384"
+    },
+    {
+      "road_class": "Primary",
+      "avg_stars": "3.9",
+      "avg_srs": "65.1",
+      "segment_count": "19788"
+    },
+    {
+      "road_class": "Trunk",
+      "avg_stars": "3.9",
+      "avg_srs": "65.4",
+      "segment_count": "12604"
+    }
+  ]
+}

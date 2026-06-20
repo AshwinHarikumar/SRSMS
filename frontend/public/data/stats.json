@@ -1,0 +1,664 @@
+{
+  "overall": {
+    "total_segments": 95584,
+    "critical": 0,
+    "high": 7062,
+    "moderate": 63462,
+    "low": 25060,
+    "black_spots": 51348,
+    "avg_star_rating": "3.7",
+    "vru_high_risk": 74552,
+    "trends": [
+      {
+        "name": "Jun",
+        "fatal": 126,
+        "serious": 293,
+        "month_date": "2025-06-01T00:00:00.000Z"
+      },
+      {
+        "name": "Jul",
+        "fatal": 326,
+        "serious": 912,
+        "month_date": "2025-07-01T00:00:00.000Z"
+      },
+      {
+        "name": "Aug",
+        "fatal": 309,
+        "serious": 983,
+        "month_date": "2025-08-01T00:00:00.000Z"
+      },
+      {
+        "name": "Sep",
+        "fatal": 307,
+        "serious": 947,
+        "month_date": "2025-09-01T00:00:00.000Z"
+      },
+      {
+        "name": "Oct",
+        "fatal": 333,
+        "serious": 961,
+        "month_date": "2025-10-01T00:00:00.000Z"
+      },
+      {
+        "name": "Nov",
+        "fatal": 289,
+        "serious": 1003,
+        "month_date": "2025-11-01T00:00:00.000Z"
+      },
+      {
+        "name": "Dec",
+        "fatal": 296,
+        "serious": 1035,
+        "month_date": "2025-12-01T00:00:00.000Z"
+      },
+      {
+        "name": "Jan",
+        "fatal": 331,
+        "serious": 936,
+        "month_date": "2026-01-01T00:00:00.000Z"
+      },
+      {
+        "name": "Feb",
+        "fatal": 295,
+        "serious": 898,
+        "month_date": "2026-02-01T00:00:00.000Z"
+      },
+      {
+        "name": "Mar",
+        "fatal": 332,
+        "serious": 951,
+        "month_date": "2026-03-01T00:00:00.000Z"
+      },
+      {
+        "name": "Apr",
+        "fatal": 307,
+        "serious": 941,
+        "month_date": "2026-04-01T00:00:00.000Z"
+      },
+      {
+        "name": "May",
+        "fatal": 343,
+        "serious": 966,
+        "month_date": "2026-05-01T00:00:00.000Z"
+      },
+      {
+        "name": "Jun",
+        "fatal": 215,
+        "serious": 646,
+        "month_date": "2026-06-01T00:00:00.000Z"
+      }
+    ],
+    "recommendations": [
+      {
+        "segment_id": 23909,
+        "title": "Lighting Deficiency",
+        "action": "Install LED streetlights.",
+        "conf": "95%",
+        "road_name": "MDR",
+        "loc": "MDR (ID: 23909)"
+      },
+      {
+        "segment_id": 23904,
+        "title": "Lighting Deficiency",
+        "action": "Install LED streetlights.",
+        "conf": "95%",
+        "road_name": "Mala-Chalakudi Road",
+        "loc": "Mala-Chalakudi Road (ID: 23904)"
+      },
+      {
+        "segment_id": 23897,
+        "title": "Lighting Deficiency",
+        "action": "Install LED streetlights.",
+        "conf": "95%",
+        "road_name": "Market Road",
+        "loc": "Market Road (ID: 23897)"
+      },
+      {
+        "segment_id": 23912,
+        "title": "Lighting Deficiency",
+        "action": "Install LED streetlights.",
+        "conf": "95%",
+        "road_name": "MDR",
+        "loc": "MDR (ID: 23912)"
+      }
+    ],
+    "weather": {
+      "temperature_2m": 25,
+      "precipitation": 0,
+      "visibility": 10000,
+      "wind_speed_10m": 0,
+      "weather_code": 0,
+      "overall_weather_risk_score": 0
+    }
+  },
+  "districts": {
+    "stats_1": {
+      "total_segments": 82394,
+      "critical": 0,
+      "high": 6127,
+      "moderate": 54655,
+      "low": 21612,
+      "black_spots": 44815,
+      "avg_star_rating": "3.7",
+      "vru_high_risk": 64275,
+      "trends": [
+        {
+          "name": "Jun",
+          "fatal": 126,
+          "serious": 293,
+          "month_date": "2025-06-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jul",
+          "fatal": 326,
+          "serious": 912,
+          "month_date": "2025-07-01T00:00:00.000Z"
+        },
+        {
+          "name": "Aug",
+          "fatal": 309,
+          "serious": 983,
+          "month_date": "2025-08-01T00:00:00.000Z"
+        },
+        {
+          "name": "Sep",
+          "fatal": 307,
+          "serious": 947,
+          "month_date": "2025-09-01T00:00:00.000Z"
+        },
+        {
+          "name": "Oct",
+          "fatal": 333,
+          "serious": 961,
+          "month_date": "2025-10-01T00:00:00.000Z"
+        },
+        {
+          "name": "Nov",
+          "fatal": 289,
+          "serious": 1003,
+          "month_date": "2025-11-01T00:00:00.000Z"
+        },
+        {
+          "name": "Dec",
+          "fatal": 296,
+          "serious": 1035,
+          "month_date": "2025-12-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jan",
+          "fatal": 331,
+          "serious": 936,
+          "month_date": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "name": "Feb",
+          "fatal": 295,
+          "serious": 898,
+          "month_date": "2026-02-01T00:00:00.000Z"
+        },
+        {
+          "name": "Mar",
+          "fatal": 332,
+          "serious": 951,
+          "month_date": "2026-03-01T00:00:00.000Z"
+        },
+        {
+          "name": "Apr",
+          "fatal": 307,
+          "serious": 941,
+          "month_date": "2026-04-01T00:00:00.000Z"
+        },
+        {
+          "name": "May",
+          "fatal": 343,
+          "serious": 966,
+          "month_date": "2026-05-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jun",
+          "fatal": 215,
+          "serious": 646,
+          "month_date": "2026-06-01T00:00:00.000Z"
+        }
+      ],
+      "recommendations": [
+        {
+          "segment_id": 23909,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23909)"
+        },
+        {
+          "segment_id": 23904,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Mala-Chalakudi Road",
+          "loc": "Mala-Chalakudi Road (ID: 23904)"
+        },
+        {
+          "segment_id": 23897,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Market Road",
+          "loc": "Market Road (ID: 23897)"
+        },
+        {
+          "segment_id": 23912,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23912)"
+        }
+      ],
+      "weather": {
+        "temperature_2m": 25,
+        "precipitation": 0,
+        "visibility": 10000,
+        "wind_speed_10m": 0,
+        "weather_code": 0,
+        "overall_weather_risk_score": 0
+      }
+    },
+    "stats_4": {
+      "total_segments": 4765,
+      "critical": 0,
+      "high": 326,
+      "moderate": 3205,
+      "low": 1234,
+      "black_spots": 1895,
+      "avg_star_rating": "3.7",
+      "vru_high_risk": 3716,
+      "trends": [
+        {
+          "name": "Jun",
+          "fatal": 126,
+          "serious": 293,
+          "month_date": "2025-06-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jul",
+          "fatal": 326,
+          "serious": 912,
+          "month_date": "2025-07-01T00:00:00.000Z"
+        },
+        {
+          "name": "Aug",
+          "fatal": 309,
+          "serious": 983,
+          "month_date": "2025-08-01T00:00:00.000Z"
+        },
+        {
+          "name": "Sep",
+          "fatal": 307,
+          "serious": 947,
+          "month_date": "2025-09-01T00:00:00.000Z"
+        },
+        {
+          "name": "Oct",
+          "fatal": 333,
+          "serious": 961,
+          "month_date": "2025-10-01T00:00:00.000Z"
+        },
+        {
+          "name": "Nov",
+          "fatal": 289,
+          "serious": 1003,
+          "month_date": "2025-11-01T00:00:00.000Z"
+        },
+        {
+          "name": "Dec",
+          "fatal": 296,
+          "serious": 1035,
+          "month_date": "2025-12-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jan",
+          "fatal": 331,
+          "serious": 936,
+          "month_date": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "name": "Feb",
+          "fatal": 295,
+          "serious": 898,
+          "month_date": "2026-02-01T00:00:00.000Z"
+        },
+        {
+          "name": "Mar",
+          "fatal": 332,
+          "serious": 951,
+          "month_date": "2026-03-01T00:00:00.000Z"
+        },
+        {
+          "name": "Apr",
+          "fatal": 307,
+          "serious": 941,
+          "month_date": "2026-04-01T00:00:00.000Z"
+        },
+        {
+          "name": "May",
+          "fatal": 343,
+          "serious": 966,
+          "month_date": "2026-05-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jun",
+          "fatal": 215,
+          "serious": 646,
+          "month_date": "2026-06-01T00:00:00.000Z"
+        }
+      ],
+      "recommendations": [
+        {
+          "segment_id": 23909,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23909)"
+        },
+        {
+          "segment_id": 23904,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Mala-Chalakudi Road",
+          "loc": "Mala-Chalakudi Road (ID: 23904)"
+        },
+        {
+          "segment_id": 23897,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Market Road",
+          "loc": "Market Road (ID: 23897)"
+        },
+        {
+          "segment_id": 23912,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23912)"
+        }
+      ],
+      "weather": {
+        "temperature_2m": 25,
+        "precipitation": 0,
+        "visibility": 10000,
+        "wind_speed_10m": 0,
+        "weather_code": 0,
+        "overall_weather_risk_score": 0
+      }
+    },
+    "stats_2": {
+      "total_segments": 4005,
+      "critical": 0,
+      "high": 290,
+      "moderate": 2680,
+      "low": 1035,
+      "black_spots": 2344,
+      "avg_star_rating": "3.7",
+      "vru_high_risk": 3121,
+      "trends": [
+        {
+          "name": "Jun",
+          "fatal": 126,
+          "serious": 293,
+          "month_date": "2025-06-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jul",
+          "fatal": 326,
+          "serious": 912,
+          "month_date": "2025-07-01T00:00:00.000Z"
+        },
+        {
+          "name": "Aug",
+          "fatal": 309,
+          "serious": 983,
+          "month_date": "2025-08-01T00:00:00.000Z"
+        },
+        {
+          "name": "Sep",
+          "fatal": 307,
+          "serious": 947,
+          "month_date": "2025-09-01T00:00:00.000Z"
+        },
+        {
+          "name": "Oct",
+          "fatal": 333,
+          "serious": 961,
+          "month_date": "2025-10-01T00:00:00.000Z"
+        },
+        {
+          "name": "Nov",
+          "fatal": 289,
+          "serious": 1003,
+          "month_date": "2025-11-01T00:00:00.000Z"
+        },
+        {
+          "name": "Dec",
+          "fatal": 296,
+          "serious": 1035,
+          "month_date": "2025-12-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jan",
+          "fatal": 331,
+          "serious": 936,
+          "month_date": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "name": "Feb",
+          "fatal": 295,
+          "serious": 898,
+          "month_date": "2026-02-01T00:00:00.000Z"
+        },
+        {
+          "name": "Mar",
+          "fatal": 332,
+          "serious": 951,
+          "month_date": "2026-03-01T00:00:00.000Z"
+        },
+        {
+          "name": "Apr",
+          "fatal": 307,
+          "serious": 941,
+          "month_date": "2026-04-01T00:00:00.000Z"
+        },
+        {
+          "name": "May",
+          "fatal": 343,
+          "serious": 966,
+          "month_date": "2026-05-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jun",
+          "fatal": 215,
+          "serious": 646,
+          "month_date": "2026-06-01T00:00:00.000Z"
+        }
+      ],
+      "recommendations": [
+        {
+          "segment_id": 23909,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23909)"
+        },
+        {
+          "segment_id": 23904,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Mala-Chalakudi Road",
+          "loc": "Mala-Chalakudi Road (ID: 23904)"
+        },
+        {
+          "segment_id": 23897,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Market Road",
+          "loc": "Market Road (ID: 23897)"
+        },
+        {
+          "segment_id": 23912,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23912)"
+        }
+      ],
+      "weather": {
+        "temperature_2m": 25,
+        "precipitation": 0,
+        "visibility": 10000,
+        "wind_speed_10m": 0,
+        "weather_code": 0,
+        "overall_weather_risk_score": 0
+      }
+    },
+    "stats_3": {
+      "total_segments": 4420,
+      "critical": 0,
+      "high": 319,
+      "moderate": 2922,
+      "low": 1179,
+      "black_spots": 2294,
+      "avg_star_rating": "3.7",
+      "vru_high_risk": 3440,
+      "trends": [
+        {
+          "name": "Jun",
+          "fatal": 126,
+          "serious": 293,
+          "month_date": "2025-06-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jul",
+          "fatal": 326,
+          "serious": 912,
+          "month_date": "2025-07-01T00:00:00.000Z"
+        },
+        {
+          "name": "Aug",
+          "fatal": 309,
+          "serious": 983,
+          "month_date": "2025-08-01T00:00:00.000Z"
+        },
+        {
+          "name": "Sep",
+          "fatal": 307,
+          "serious": 947,
+          "month_date": "2025-09-01T00:00:00.000Z"
+        },
+        {
+          "name": "Oct",
+          "fatal": 333,
+          "serious": 961,
+          "month_date": "2025-10-01T00:00:00.000Z"
+        },
+        {
+          "name": "Nov",
+          "fatal": 289,
+          "serious": 1003,
+          "month_date": "2025-11-01T00:00:00.000Z"
+        },
+        {
+          "name": "Dec",
+          "fatal": 296,
+          "serious": 1035,
+          "month_date": "2025-12-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jan",
+          "fatal": 331,
+          "serious": 936,
+          "month_date": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "name": "Feb",
+          "fatal": 295,
+          "serious": 898,
+          "month_date": "2026-02-01T00:00:00.000Z"
+        },
+        {
+          "name": "Mar",
+          "fatal": 332,
+          "serious": 951,
+          "month_date": "2026-03-01T00:00:00.000Z"
+        },
+        {
+          "name": "Apr",
+          "fatal": 307,
+          "serious": 941,
+          "month_date": "2026-04-01T00:00:00.000Z"
+        },
+        {
+          "name": "May",
+          "fatal": 343,
+          "serious": 966,
+          "month_date": "2026-05-01T00:00:00.000Z"
+        },
+        {
+          "name": "Jun",
+          "fatal": 215,
+          "serious": 646,
+          "month_date": "2026-06-01T00:00:00.000Z"
+        }
+      ],
+      "recommendations": [
+        {
+          "segment_id": 23909,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23909)"
+        },
+        {
+          "segment_id": 23904,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Mala-Chalakudi Road",
+          "loc": "Mala-Chalakudi Road (ID: 23904)"
+        },
+        {
+          "segment_id": 23897,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "Market Road",
+          "loc": "Market Road (ID: 23897)"
+        },
+        {
+          "segment_id": 23912,
+          "title": "Lighting Deficiency",
+          "action": "Install LED streetlights.",
+          "conf": "95%",
+          "road_name": "MDR",
+          "loc": "MDR (ID: 23912)"
+        }
+      ],
+      "weather": {
+        "temperature_2m": 25,
+        "precipitation": 0,
+        "visibility": 10000,
+        "wind_speed_10m": 0,
+        "weather_code": 0,
+        "overall_weather_risk_score": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow public read access to all safety collections for the static dashboard
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false; // Writes are only allowed via the admin SDK seeder
+    }
+  }
+}

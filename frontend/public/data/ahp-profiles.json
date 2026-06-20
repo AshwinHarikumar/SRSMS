@@ -1,0 +1,81 @@
+{
+  "profiles": [
+    {
+      "id": 1,
+      "profile_name": "MoRTH Standard",
+      "description": "Default weighting based on Indian road safety literature. Prioritizes crash history and VRU exposure.",
+      "derived_weights": {
+        "vru": 0.3,
+        "speed": 0.15,
+        "traffic": 0.1,
+        "accident": 0.3,
+        "geometry": 0.05,
+        "infrastructure": 0.1
+      },
+      "pairwise_matrix": {
+        "matrix": [
+          [
+            1,
+            2,
+            3,
+            3,
+            1,
+            5
+          ],
+          [
+            0.5,
+            1,
+            2,
+            2,
+            0.5,
+            3
+          ],
+          [
+            0.333,
+            0.5,
+            1,
+            1,
+            0.333,
+            2
+          ],
+          [
+            0.333,
+            0.5,
+            1,
+            1,
+            0.333,
+            2
+          ],
+          [
+            1,
+            2,
+            3,
+            3,
+            1,
+            5
+          ],
+          [
+            0.2,
+            0.333,
+            0.5,
+            0.5,
+            0.2,
+            1
+          ]
+        ],
+        "criteria": [
+          "accident",
+          "speed",
+          "traffic",
+          "infrastructure",
+          "vru",
+          "geometry"
+        ]
+      },
+      "consistency_ratio": 0.032,
+      "is_consistent": true,
+      "is_active": true,
+      "created_at": "2026-06-18T22:11:29.903Z"
+    }
+  ]
+}
