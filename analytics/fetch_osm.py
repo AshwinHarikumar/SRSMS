@@ -5,7 +5,7 @@ import random
 import time
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
-DB_DSN = "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms"
+DB_DSN = "postgresql://srsms_user:srsms_password@db:5432/srsms"
 
 # Query for Major Highways in Kerala
 OVERPASS_QUERY = """

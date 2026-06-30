@@ -5,7 +5,7 @@ import random
 from datetime import datetime, timedelta
 import uuid
 
-DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms")
+DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@db:5432/srsms")
 
 def seed_accidents():
     print("Connecting to DB to seed Accidents...")

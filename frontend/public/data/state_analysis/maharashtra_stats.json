@@ -1,0 +1,39 @@
+{
+  "total_segments": 14082,
+  "total_length_km": 43272.3,
+  "avg_speed_limit": 52.78,
+  "avg_median_speed": 45.27,
+  "avg_over_limit_pct": 0.08,
+  "class_distribution": [
+    {
+      "name": "secondary",
+      "value": 6713
+    },
+    {
+      "name": "primary",
+      "value": 3994
+    },
+    {
+      "name": "trunk",
+      "value": 3252
+    },
+    {
+      "name": "motorway",
+      "value": 123
+    }
+  ],
+  "landuse_distribution": [
+    {
+      "name": "RURAL",
+      "value": 3097
+    },
+    {
+      "name": "URBAN",
+      "value": 913
+    },
+    {
+      "name": "unknown",
+      "value": 10072
+    }
+  ]
+}

@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import joblib
 
-DB_DSN = "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms"
+DB_DSN = "postgresql://srsms_user:srsms_password@db:5432/srsms"
 
 def train():
     print("Connecting to database to extract training data...")

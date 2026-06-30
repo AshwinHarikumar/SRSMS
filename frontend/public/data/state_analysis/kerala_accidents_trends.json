@@ -1,0 +1,146 @@
+[
+  {
+    "year": 2001,
+    "accidents": 38361,
+    "deaths": 2674,
+    "injuries": 49675,
+    "mortality_rate": 6.97,
+    "injuries_per_accident": 1.29
+  },
+  {
+    "year": 2002,
+    "accidents": 38762,
+    "deaths": 2792,
+    "injuries": 49460,
+    "mortality_rate": 7.2,
+    "injuries_per_accident": 1.28
+  },
+  {
+    "year": 2003,
+    "accidents": 39496,
+    "deaths": 2905,
+    "injuries": 48640,
+    "mortality_rate": 7.36,
+    "injuries_per_accident": 1.23
+  },
+  {
+    "year": 2004,
+    "accidents": 41219,
+    "deaths": 3059,
+    "injuries": 51228,
+    "mortality_rate": 7.42,
+    "injuries_per_accident": 1.24
+  },
+  {
+    "year": 2005,
+    "accidents": 42363,
+    "deaths": 3203,
+    "injuries": 51124,
+    "mortality_rate": 7.56,
+    "injuries_per_accident": 1.21
+  },
+  {
+    "year": 2006,
+    "accidents": 41647,
+    "deaths": 3589,
+    "injuries": 49881,
+    "mortality_rate": 8.62,
+    "injuries_per_accident": 1.2
+  },
+  {
+    "year": 2007,
+    "accidents": 39917,
+    "deaths": 3778,
+    "injuries": 48246,
+    "mortality_rate": 9.46,
+    "injuries_per_accident": 1.21
+  },
+  {
+    "year": 2008,
+    "accidents": 37263,
+    "deaths": 3901,
+    "injuries": 43857,
+    "mortality_rate": 10.47,
+    "injuries_per_accident": 1.18
+  },
+  {
+    "year": 2009,
+    "accidents": 35433,
+    "deaths": 3831,
+    "injuries": 41401,
+    "mortality_rate": 10.81,
+    "injuries_per_accident": 1.17
+  },
+  {
+    "year": 2010,
+    "accidents": 35082,
+    "deaths": 3950,
+    "injuries": 41473,
+    "mortality_rate": 11.26,
+    "injuries_per_accident": 1.18
+  },
+  {
+    "year": 2011,
+    "accidents": 35216,
+    "deaths": 4145,
+    "injuries": 41379,
+    "mortality_rate": 11.77,
+    "injuries_per_accident": 1.18
+  },
+  {
+    "year": 2012,
+    "accidents": 36174,
+    "deaths": 4286,
+    "injuries": 41915,
+    "mortality_rate": 11.85,
+    "injuries_per_accident": 1.16
+  },
+  {
+    "year": 2013,
+    "accidents": 35215,
+    "deaths": 4258,
+    "injuries": 40346,
+    "mortality_rate": 12.09,
+    "injuries_per_accident": 1.15
+  },
+  {
+    "year": 2014,
+    "accidents": 36282,
+    "deaths": 4049,
+    "injuries": 41096,
+    "mortality_rate": 11.16,
+    "injuries_per_accident": 1.13
+  },
+  {
+    "year": 2015,
+    "accidents": 39014,
+    "deaths": 4196,
+    "injuries": 43735,
+    "mortality_rate": 10.76,
+    "injuries_per_accident": 1.12
+  },
+  {
+    "year": 2016,
+    "accidents": 39420,
+    "deaths": 4287,
+    "injuries": 44108,
+    "mortality_rate": 10.88,
+    "injuries_per_accident": 1.12
+  },
+  {
+    "year": 2017,
+    "accidents": 38470,
+    "deaths": 4131,
+    "injuries": 42671,
+    "mortality_rate": 10.74,
+    "injuries_per_accident": 1.11
+  },
+  {
+    "year": 2018,
+    "accidents": 40181,
+    "deaths": 4303,
+    "injuries": 45458,
+    "mortality_rate": 10.71,
+    "injuries_per_accident": 1.13
+  }
+]

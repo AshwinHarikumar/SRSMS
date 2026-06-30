@@ -256,27 +256,24 @@ export const firestoreFetcher = async (url: string, init?: RequestInit): Promise
       }
 
       const segment = segmentFeature.properties;
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY || localStorage.getItem('groq_api_key');
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem('gemini_api_key');
 
       if (apiKey) {
         try {
           const prompt = `You are an expert traffic safety engineer analyzing road segment ID ${segment.id} (${segment.road_name || 'Unnamed Road'}).
 Road Details:
 - Road Class: ${segment.road_class || 'Unknown'}
-- Speed Limit: ${segment.speed_limit} km/h
-- Traffic Volume: ${segment.traffic_volume || 0} vehicles/day
-- Speed Violations: ${segment.speed_violations || 0} violations
-- Priority Risk Level: ${segment.category} (PI score: ${segment.pi})
-- Star Rating: ${segment.star_rating ? `${segment.star_rating} Stars` : 'Not Rated'}
-- VRU Risk: ${segment.vru_risk_category || 'Low'} (Score: ${segment.vru_exposure_score || 0})
-- MoRTH Black Spot: ${segment.is_black_spot ? `Yes (${segment.bs_accident_count} accidents, ${segment.bs_fatality_count} deaths)` : 'No'}
+- Name: ${segment.road_name || 'Unknown Road'}
+- Risk Priority: ${segment.priority_category || 'Unknown'}
+- Speed Limit: ${segment.speed_limit || 'Unknown'} km/h
+- Geometry: ${segment.geometry ? 'Complex/Curved' : 'Straight'}
 
-Risk Components (Scores out of 100):
-- Crash History Score: ${segment.scores?.accident || 0}
-- Speeding Score: ${segment.scores?.speed || 0}
-- Infrastructure Deficit: ${segment.scores?.infra || 0}
-- Weather Risk: ${segment.scores?.weather || 0}
-- Geometry Risk: ${segment.scores?.geometry || 0}
+Scores:
+- Crash History Score: ${segment.accident_score || 0}
+- Speeding Score: ${segment.speed_score || 0}
+- Infrastructure Deficit: ${segment.infrastructure_score || 0}
+- Weather Risk: ${segment.weather_score || 0}
+- Geometry Risk: ${segment.geometry_score || 0}
 
 Generate exactly 3 specific, highly-actionable road safety corrections/engineering solutions to reduce risk on this segment.
 Format your output as a JSON object with a single key "corrections", containing an array of 3 objects. Each object must have these exact keys:
@@ -287,42 +284,46 @@ Format your output as a JSON object with a single key "corrections", containing 
 
 Ensure the JSON output is strictly valid and matches the requested schema.`;
 
-          const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${apiKey}`,
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              model: 'llama-3.3-70b-versatile',
-              messages: [
-                { role: 'user', content: prompt }
-              ],
-              response_format: { type: 'json_object' }
+              contents: [{
+                parts: [
+                  { text: 'System prompt: You are an expert traffic safety engineer. Provide highly specific, localized, and unique recommendations based on the precise data provided. Avoid generic, repetitive advice.\n\n' + prompt + '\n\nIMPORTANT: Do NOT output generic suggestions. Customize your response heavily based on the provided Road Details and Scores.' }
+                ]
+              }],
+              generationConfig: {
+                temperature: 0.7,
+                responseMimeType: 'application/json'
+              }
             })
           });
 
-          if (groqRes.ok) {
-            const groqData = await groqRes.json();
-            const contentStr = groqData.choices?.[0]?.message?.content;
+          if (geminiRes.ok) {
+            const geminiData = await geminiRes.json();
+            const contentStr = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
             if (contentStr) {
-              const parsed = JSON.parse(contentStr);
+              const cleanStr = contentStr.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+              const parsed = JSON.parse(cleanStr);
               if (parsed.corrections && Array.isArray(parsed.corrections)) {
-                return makeJsonResponse({ corrections: parsed.corrections, source: 'groq' });
+                return makeJsonResponse({ corrections: parsed.corrections, source: 'gemini' });
               }
             }
           } else {
-            console.error('Groq client API error response:', await groqRes.text());
+            console.error('Gemini client API error response:', await geminiRes.text());
           }
-        } catch (groqErr) {
-          console.error('Failed calling Groq client API, falling back to rule-based logic:', groqErr);
+        } catch (geminiErr) {
+          console.error('Failed calling Gemini client API, falling back to rule-based logic:', geminiErr);
         }
       }
 
       // Rule-Based Fallback logic
       const corrections: any[] = [];
       
-      if (segment.is_black_spot || (segment.scores?.accident && segment.scores.accident > 50)) {
+      if (segment.is_black_spot || (segment.accident_score && segment.accident_score > 50)) {
         corrections.push({
           category: 'Enforcement & Warning',
           action: 'Install speed enforcement cameras, dynamic speed feedback indicators, and high-visibility warning signs alerting drivers of the high-accident zone.',
@@ -330,7 +331,7 @@ Ensure the JSON output is strictly valid and matches the requested schema.`;
           cost: 'Low'
         });
       }
-      if ((segment.scores?.speed && segment.scores.speed > 50) || (segment.speed_limit && segment.speed_limit > 60)) {
+      if ((segment.speed_score && segment.speed_score > 50) || (segment.speed_limit && segment.speed_limit > 60)) {
         corrections.push({
           category: 'Speed Calming',
           action: 'Implement traffic calming interventions such as rumble strips, speed humps, and optical speed bars to reduce average speeds.',
@@ -338,7 +339,7 @@ Ensure the JSON output is strictly valid and matches the requested schema.`;
           cost: 'Medium'
         });
       }
-      if ((segment.vru_exposure_score && segment.vru_exposure_score > 30) || (segment.scores?.infra && segment.scores.infra > 40)) {
+      if ((segment.vru_exposure_score && segment.vru_exposure_score > 30) || (segment.infrastructure_score && segment.infrastructure_score > 40)) {
         corrections.push({
           category: 'Pedestrian Infrastructure',
           action: 'Construct raised pedestrian crossings with high-visibility zebra markings, install pedestrian refuge islands, and build continuous walkways/sidewalks.',
@@ -346,7 +347,7 @@ Ensure the JSON output is strictly valid and matches the requested schema.`;
           cost: 'Medium'
         });
       }
-      if (segment.scores?.geometry && segment.scores.geometry > 40) {
+      if (segment.geometry_score && segment.geometry_score > 40) {
         corrections.push({
           category: 'Road Alignment',
           action: 'Improve road banking (superelevation) on sharp horizontal curves, apply high-friction surface treatment (HFST), and clear sightline obstructions.',
@@ -377,6 +378,127 @@ Ensure the JSON output is strictly valid and matches the requested schema.`;
       return makeJsonResponse({ corrections: finalCorrections, source: 'fallback' });
     }
  
+    // 17. Accident Analysis (Uses Client-Side Groq API or Fallback)
+    const accidentAnalysisMatch = pathname.match(/\/api\/data\/accidents\/(\d+)\/analysis$/);
+    if (accidentAnalysisMatch) {
+      const accidentIdStr = accidentAnalysisMatch[1];
+      const res = await fetch('/data/accidents.json');
+      const data = await res.json();
+      const features = data.features || [];
+      const accidentFeature = features.find((f: any) => String(f.properties.id) === accidentIdStr);
+      if (!accidentFeature) {
+        return new Response(JSON.stringify({ error: 'Accident not found' }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      const accident = accidentFeature.properties;
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem('gemini_api_key');
+
+      if (apiKey) {
+        try {
+          const prompt = `You are an expert traffic safety investigator analyzing a road traffic accident.
+Accident Details:
+- ID: ${accident.id}
+- Date/Time: ${new Date(accident.date).toLocaleDateString()} ${accident.time || ''}
+- Severity: ${accident.severity}
+- Fatalities: ${accident.fatalities || 0}
+- Injuries: ${accident.injuries || 0}
+- Vehicle Type: ${accident.vehicle_type || 'Unknown'}
+- Collision Type: ${accident.collision_type || 'Unknown'}
+
+Generate exactly 3 specific, highly-actionable safety mitigation measures or investigations that should be done at this site to prevent similar accidents.
+Format your output as a JSON object with a single key "corrections", containing an array of 3 objects. Each object must have these exact keys:
+- "category": Short category (e.g., "Enforcement", "Infrastructure", "Visibility")
+- "action": Precise, professional safety correction to implement
+- "impact": Expected safety impact (e.g., "High", "Medium", "Low")
+- "cost": Relative cost (e.g., "Low", "Medium", "High")
+
+Ensure the JSON output is strictly valid and matches the requested schema.`;
+
+          const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  { text: 'System prompt: You are an expert traffic safety investigator. Provide highly specific, localized, and unique recommendations based on the precise data provided.\n\n' + prompt }
+                ]
+              }],
+              generationConfig: {
+                temperature: 0.7,
+                responseMimeType: 'application/json'
+              }
+            })
+          });
+
+          if (geminiRes.ok) {
+            const geminiData = await geminiRes.json();
+            const contentStr = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (contentStr) {
+              const cleanStr = contentStr.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+              const parsed = JSON.parse(cleanStr);
+              if (parsed.corrections && Array.isArray(parsed.corrections)) {
+                return makeJsonResponse({ corrections: parsed.corrections, source: 'gemini' });
+              }
+            }
+          }
+        } catch (geminiErr) {
+          console.error('Failed calling Gemini client API, falling back to rule-based logic:', geminiErr);
+        }
+      }
+
+      // Rule-Based Fallback logic
+      const corrections: any[] = [];
+      
+      if (accident.severity === 'Fatal' || accident.severity === 'Serious') {
+        corrections.push({
+          category: 'Crash Investigation',
+          action: 'Conduct an immediate multi-disciplinary crash investigation (MCI) to identify contributing factors and engineering defects.',
+          impact: 'High',
+          cost: 'Medium'
+        });
+      }
+      if (accident.collision_type && accident.collision_type.includes('Pedestrian')) {
+        corrections.push({
+          category: 'Pedestrian Safety',
+          action: 'Install raised pedestrian crossings, enhance street lighting, and construct safe pedestrian refuge islands at the crash site.',
+          impact: 'High',
+          cost: 'Medium'
+        });
+      } else if (accident.collision_type && accident.collision_type.includes('Rear')) {
+        corrections.push({
+          category: 'Speed Calming',
+          action: 'Apply transverse bar markings and advanced warning signs to alert drivers of intersection or queueing ahead.',
+          impact: 'Medium',
+          cost: 'Low'
+        });
+      }
+
+      if (corrections.length < 3) {
+        corrections.push({
+          category: 'Enforcement',
+          action: 'Increase targeted traffic police patrols and deploy mobile speed cameras during peak hours to deter reckless driving.',
+          impact: 'High',
+          cost: 'Low'
+        });
+      }
+      if (corrections.length < 3) {
+        corrections.push({
+          category: 'Visibility',
+          action: 'Clear vegetation and obstacles blocking sightlines at nearby junctions, and refresh all road markings with retroreflective paint.',
+          impact: 'Medium',
+          cost: 'Low'
+        });
+      }
+
+      const finalCorrections = corrections.slice(0, 3);
+      return makeJsonResponse({ corrections: finalCorrections, source: 'fallback' });
+    }
+
     // Default error for unhandled endpoints
     return new Response(JSON.stringify({ error: `Not implemented client-side: ${pathname}` }), {
       status: 501,

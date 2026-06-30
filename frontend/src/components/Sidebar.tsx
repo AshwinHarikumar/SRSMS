@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
   ShieldAlert, LayoutDashboard, Map, Layers, Brain, AlertTriangle,
   MapPin, UploadCloud, LogOut,
-  Crosshair, PersonStanding, Star, Scale
+  Crosshair, PersonStanding, Star, Scale, Globe
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -14,6 +14,7 @@ interface SidebarProps {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'stateanalysis', label: 'State Analysis', icon: Globe },
   { id: 'riskmap', label: 'Risk Map', icon: Map },
   { id: 'categories', label: 'Categories', icon: Layers },
   { id: 'models', label: 'AI Models', icon: Brain },

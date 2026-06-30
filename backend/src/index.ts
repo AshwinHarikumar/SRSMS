@@ -28,7 +28,9 @@ app.use('/api/data', dataRoutes);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 
-    // Trigger auto-sync in the background after 5 seconds to ensure DB is up
+    // Auto-sync is disabled to prevent Firestore quota exhaustion.
+    // If you need to manually sync, use the package.json script: npm run seed:firestore
+    /*
     setTimeout(async () => {
         try {
             console.log('🤖 Auto-sync: Checking databases for synchronization...');
@@ -37,4 +39,5 @@ app.listen(port, () => {
             console.error('🤖 Auto-sync: Failed to sync on startup:', err);
         }
     }, 5000);
+    */
 });

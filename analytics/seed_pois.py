@@ -3,7 +3,7 @@ import psycopg2
 from psycopg2.extras import execute_batch
 import random
 
-DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms")
+DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@db:5432/srsms")
 
 def seed_pois():
     print("Connecting to DB to seed POIs...")

@@ -16,6 +16,7 @@ import BlackSpotsPage from './pages/BlackSpotsPage';
 import VRUExposurePage from './pages/VRUExposurePage';
 import StarRatingPage from './pages/StarRatingPage';
 import AHPWeightsPage from './pages/AHPWeightsPage';
+import StateAnalysisPage from './pages/StateAnalysisPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -332,6 +333,8 @@ function App() {
         return <POIsPage poiData={poiData} geoData={geoData} onFetchPois={fetchPois} />;
       case 'upload':
         return <DataUpload isPage={true} />;
+      case 'stateanalysis':
+        return <StateAnalysisPage />;
       default:
         return (
           <DashboardPage

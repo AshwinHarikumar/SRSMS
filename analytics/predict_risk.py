@@ -2,7 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 import joblib
 
-DB_DSN = "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms"
+DB_DSN = "postgresql://srsms_user:srsms_password@db:5432/srsms"
 
 def predict():
     print("Loading AI Risk Prediction Model...")

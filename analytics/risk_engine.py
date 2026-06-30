@@ -137,7 +137,7 @@ def calculate_all_priority_indices(db: Session):
     from psycopg2.extras import execute_batch
     import os
     
-    DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms")
+    DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@db:5432/srsms")
     pg_conn = psycopg2.connect(DB_DSN)
     cur = pg_conn.cursor()
     

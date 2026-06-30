@@ -1,0 +1,32 @@
+{
+  "total_segments": 23896,
+  "total_accidents_period": 689515,
+  "total_deaths_period": 67337,
+  "total_injuries_period": 815693,
+  "class_distribution": [
+    {
+      "name": "secondary",
+      "value": 14846
+    },
+    {
+      "name": "trunk",
+      "value": 3151
+    },
+    {
+      "name": "primary",
+      "value": 4947
+    },
+    {
+      "name": "primary_link",
+      "value": 293
+    },
+    {
+      "name": "trunk_link",
+      "value": 486
+    },
+    {
+      "name": "secondary_link",
+      "value": 173
+    }
+  ]
+}

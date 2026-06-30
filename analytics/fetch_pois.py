@@ -2,7 +2,7 @@ import requests
 import psycopg2
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
-DB_DSN = "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms"
+DB_DSN = "postgresql://srsms_user:srsms_password@db:5432/srsms"
 
 OVERPASS_QUERY = """
 [out:json][timeout:90];

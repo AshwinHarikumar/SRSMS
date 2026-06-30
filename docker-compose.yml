@@ -26,6 +26,7 @@ services:
       - DATABASE_URL=postgres://srsms_user:srsms_password@db:5432/srsms
       - JWT_SECRET=super_secret_jwt_key_srsms
       - ANALYTICS_SERVICE_URL=http://analytics:8000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - db
     restart: unless-stopped
@@ -35,10 +36,9 @@ services:
       context: ./analytics
       dockerfile: Dockerfile
     container_name: srsms_analytics
-    ports:
-      - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://srsms_user:srsms_password@db:5432/srsms
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - db
     restart: unless-stopped

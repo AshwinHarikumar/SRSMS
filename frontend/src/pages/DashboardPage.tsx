@@ -276,9 +276,9 @@ export default function DashboardPage({ stats, districts = [], selectedDistrict 
           <span className="badge badge-primary">{stats.recommendations?.length || 0} Active</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {(stats.recommendations || []).map((rec: any) => (
+          {(stats.recommendations || []).map((rec: any, idx: number) => (
             <div
-              key={rec.id}
+              key={`${rec.id || 'rec'}-${idx}`}
               className="glass-panel-hover p-4 cursor-pointer group"
             >
               <div className="flex justify-between items-start mb-2">

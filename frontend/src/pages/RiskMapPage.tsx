@@ -30,7 +30,7 @@ export default function RiskMapPage({
   const [corrections, setCorrections] = useState<any[]>([]);
   const [loadingCorrections, setLoadingCorrections] = useState<boolean>(false);
   const [correctionsError, setCorrectionsError] = useState<string>('');
-  const [groqApiKey, setGroqApiKey] = useState<string>(localStorage.getItem('groq_api_key') || '');
+  const [geminiApiKey, setGeminiApiKey] = useState<string>(localStorage.getItem('gemini_api_key') || '');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export default function RiskMapPage({
                 <Popup>
                   <div className="p-1">
                     <h3 className="font-bold text-red-500 mb-1">{f.properties.severity} Accident</h3>
-                    <p className="text-xs mb-1"><strong>Date:</strong> {new Date(f.properties.date).toLocaleDateString()}</p>
+
                     {f.properties.fatalities > 0 && <p className="text-xs mb-1"><strong>Fatalities:</strong> {f.properties.fatalities}</p>}
                     {f.properties.injuries > 0 && <p className="text-xs mb-1"><strong>Injuries:</strong> {f.properties.injuries}</p>}
                     {f.properties.vehicle_type && <p className="text-xs mb-1"><strong>Vehicle:</strong> {f.properties.vehicle_type}</p>}
@@ -371,7 +371,7 @@ export default function RiskMapPage({
                       <button
                         onClick={() => setIsSettingsOpen(!isSettingsOpen)}
                         className="p-1.5 rounded-lg border border-border bg-surface text-text-muted hover:text-text-main hover:bg-surface-hover transition-colors"
-                        title="Configure Groq API Key"
+                        title="Configure Gemini API Key"
                       >
                         <Settings className="w-3.5 h-3.5" />
                       </button>
@@ -380,20 +380,20 @@ export default function RiskMapPage({
                     {isSettingsOpen && (
                       <div className="mb-4 p-4 rounded-xl border border-border bg-surface-alt space-y-3">
                         <label className="text-xs font-bold text-text-muted flex items-center gap-1">
-                          <Key className="w-3 h-3" /> Groq API Key (Stored locally)
+                          <Key className="w-3 h-3" /> Gemini API Key (Stored locally)
                         </label>
                         <input
                           type="password"
-                          value={groqApiKey}
+                          value={geminiApiKey}
                           onChange={(e) => {
-                            setGroqApiKey(e.target.value);
-                            localStorage.setItem('groq_api_key', e.target.value);
+                            setGeminiApiKey(e.target.value);
+                            localStorage.setItem('gemini_api_key', e.target.value);
                           }}
-                          placeholder="gsk_..."
+                          placeholder="AIza..."
                           className="w-full px-3 py-1.5 rounded-lg border border-border bg-surface text-xs text-text-main focus:outline-none focus:ring-1 focus:ring-primary"
                         />
                         <p className="text-[10px] text-text-dim">
-                          Pasting your Groq API Key enables dynamic AI safety analysis. Leave blank to use localized safety guideline rules.
+                          Pasting your Gemini API Key enables dynamic AI safety analysis. Leave blank to use localized safety guideline rules.
                         </p>
                       </div>
                     )}

@@ -16,7 +16,7 @@ from sklearn.metrics import classification_report, roc_auc_score
 import joblib
 import os
 
-DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms")
+DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@db:5432/srsms")
 
 # MoRTH Criteria Thresholds
 ACCIDENT_THRESHOLD = 5      # 5+ accidents in 3 years
@@ -71,7 +71,7 @@ def detect_black_spots(db: Session):
     from psycopg2.extras import execute_batch
     import os
     
-    DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@srsms_db:5432/srsms")
+    DB_DSN = os.getenv("DATABASE_URL", "postgresql://srsms_user:srsms_password@db:5432/srsms")
     pg_conn = psycopg2.connect(DB_DSN)
     cur = pg_conn.cursor()
 

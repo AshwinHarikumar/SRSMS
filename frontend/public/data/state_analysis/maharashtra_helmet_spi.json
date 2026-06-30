@@ -1,0 +1,26 @@
+[
+  {
+    "region": "Mumbai",
+    "all_riders_spi": 0.56,
+    "driver_spi": 0.68,
+    "passenger_spi": 0.01
+  },
+  {
+    "region": "Pune",
+    "all_riders_spi": 0.21,
+    "driver_spi": 0.26,
+    "passenger_spi": 0.01
+  },
+  {
+    "region": "Maharashtra Rural",
+    "all_riders_spi": 0.15,
+    "driver_spi": 0.2,
+    "passenger_spi": 0.02
+  },
+  {
+    "region": "Maharastra Urban",
+    "all_riders_spi": 0.24,
+    "driver_spi": 0.3,
+    "passenger_spi": 0.01
+  }
+]

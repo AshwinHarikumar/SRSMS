@@ -26,6 +26,39 @@ export default function AccidentsPage({ accidentsData, onFetchAccidents }: Accid
   const [districts, setDistricts] = useState<any[]>([]);
   const [selectedDistrict, setSelectedDistrict] = useState<string>('All');
 
+  const [selectedAccident, setSelectedAccident] = useState<any>(null);
+  const [analysis, setAnalysis] = useState<any[]>([]);
+  const [loadingAnalysis, setLoadingAnalysis] = useState<boolean>(false);
+  const [analysisError, setAnalysisError] = useState<string>('');
+
+  React.useEffect(() => {
+    if (!selectedAccident) {
+      setAnalysis([]);
+      return;
+    }
+
+    const fetchAnalysis = async () => {
+      setLoadingAnalysis(true);
+      setAnalysisError('');
+      try {
+        const id = selectedAccident.properties.id;
+        const res = await fetch(`/api/data/accidents/${id}/analysis`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch accident analysis');
+        }
+        const data = await res.json();
+        setAnalysis(data.corrections || []);
+      } catch (err: any) {
+        console.error(err);
+        setAnalysisError(err.message || 'Error loading analysis');
+      } finally {
+        setLoadingAnalysis(false);
+      }
+    };
+
+    fetchAnalysis();
+  }, [selectedAccident]);
+
   // Fetch districts on mount
   React.useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3080'}/api/data/districts`)
@@ -173,25 +206,70 @@ export default function AccidentsPage({ accidentsData, onFetchAccidents }: Accid
             {filteredAccidents.slice(0, 500).map((f: any) => {
               const coords = f.geometry.coordinates;
               const config = SEVERITY_CONFIG[f.properties.severity] || SEVERITY_CONFIG['Minor'];
+              const isSelected = selectedAccident?.properties.id === f.properties.id;
+              
               return (
                 <CircleMarker
                   key={f.properties.id || f.properties.id}
                   center={[coords[1], coords[0]]}
                   radius={f.properties.severity === 'Fatal' ? 12 : f.properties.severity === 'Serious' ? 8 : 5}
                   fillColor={config.color}
-                  color="rgba(255,255,255,0.3)"
-                  weight={1}
-                  fillOpacity={0.7}
+                  color={isSelected ? '#fff' : "rgba(255,255,255,0.3)"}
+                  weight={isSelected ? 3 : 1}
+                  fillOpacity={isSelected ? 1 : 0.7}
+                  eventHandlers={{
+                    click: () => setSelectedAccident(f)
+                  }}
                 >
-                  <Popup>
-                    <div className="p-1">
-                      <h3 className="font-bold text-red-500 mb-1">{f.properties.severity} Accident</h3>
-                      <p className="text-xs mb-1"><strong>ID:</strong> {f.properties.id}</p>
-                      <p className="text-xs mb-1"><strong>Date:</strong> {new Date(f.properties.date).toLocaleDateString()}</p>
-                      {f.properties.fatalities > 0 && <p className="text-xs mb-1"><strong>Fatalities:</strong> {f.properties.fatalities}</p>}
-                      {f.properties.injuries > 0 && <p className="text-xs mb-1"><strong>Injuries:</strong> {f.properties.injuries}</p>}
-                      {f.properties.vehicle_type && <p className="text-xs mb-1"><strong>Vehicle:</strong> {f.properties.vehicle_type}</p>}
-                      {f.properties.collision_type && <p className="text-xs"><strong>Type:</strong> {f.properties.collision_type}</p>}
+                  <Popup minWidth={350} maxWidth={400} eventHandlers={{ remove: () => setSelectedAccident(null) }}>
+                    <div className="p-1 max-h-[300px] overflow-y-auto">
+                      <div className="flex justify-between items-start mb-2 border-b pb-2">
+                        <div>
+                          <h3 className="font-bold text-red-500 mb-1 flex items-center gap-1.5">
+                            <config.icon className="w-4 h-4" /> {f.properties.severity} Accident
+                          </h3>
+                          <p className="text-xs mb-1"><strong>ID:</strong> {f.properties.id}</p>
+
+                        </div>
+                        <div className="text-right">
+                          {f.properties.fatalities > 0 && <p className="text-xs mb-1 text-red-500 font-bold">{f.properties.fatalities} Fatalities</p>}
+                          {f.properties.injuries > 0 && <p className="text-xs mb-1 text-amber-500 font-bold">{f.properties.injuries} Injuries</p>}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mb-3 text-xs">
+                        {f.properties.vehicle_type && <div><strong className="text-slate-400">Vehicle:</strong> {f.properties.vehicle_type}</div>}
+                        {f.properties.collision_type && <div><strong className="text-slate-400">Type:</strong> {f.properties.collision_type}</div>}
+                      </div>
+
+                      {/* AI Analysis Section */}
+                      {isSelected && (
+                        <div className="mt-4 border-t pt-3">
+                          <h4 className="text-xs font-bold text-blue-500 mb-2 flex items-center gap-1">
+                            <Database className="w-3 h-3" /> AI Accident Mitigation Analysis
+                          </h4>
+                          {loadingAnalysis ? (
+                            <div className="space-y-2">
+                              <div className="h-3 bg-slate-200 animate-pulse rounded w-3/4"></div>
+                              <div className="h-3 bg-slate-200 animate-pulse rounded w-full"></div>
+                              <div className="h-3 bg-slate-200 animate-pulse rounded w-5/6"></div>
+                            </div>
+                          ) : analysisError ? (
+                            <p className="text-xs text-red-400">{analysisError}</p>
+                          ) : analysis.length > 0 ? (
+                            <div className="space-y-2">
+                              {analysis.map((corr, idx) => (
+                                <div key={idx} className="bg-slate-50 p-2 rounded border border-slate-100">
+                                  <div className="flex justify-between items-center mb-1">
+                                    <span className="text-[10px] font-bold text-blue-600 bg-blue-100 px-1.5 py-0.5 rounded">{corr.category}</span>
+                                    <span className="text-[9px] text-slate-500 font-medium">Impact: {corr.impact}</span>
+                                  </div>
+                                  <p className="text-xs text-slate-700 leading-tight">{corr.action}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
                     </div>
                   </Popup>
                 </CircleMarker>

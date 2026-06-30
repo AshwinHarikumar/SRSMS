@@ -175,10 +175,14 @@ router.get('/segments/:id/corrections', async (req, res) => {
         }
 
         const segment = result.rows[0];
-        const apiKey = process.env.GROQ_API_KEY;
+        const apiKeyEnv = process.env.GEMINI_API_KEY;
 
-        if (apiKey) {
+        if (apiKeyEnv) {
             try {
+                // Split keys if comma separated and pick one randomly
+                const apiKeys = apiKeyEnv.split(',').map(k => k.trim()).filter(k => k.length > 0);
+                const apiKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
+
                 const prompt = `You are an expert traffic safety engineer analyzing road segment ID ${segment.id} (${segment.road_name || 'Unnamed Road'}).
 Road Details:
 - Road Class: ${segment.road_class || 'Unknown'}
@@ -206,35 +210,39 @@ Format your output as a JSON object with a single key "corrections", containing 
 
 Ensure the JSON output is strictly valid and matches the requested schema.`;
 
-                const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${apiKey}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'llama-3.3-70b-versatile',
-                        messages: [
-                            { role: 'user', content: prompt }
-                        ],
-                        response_format: { type: 'json_object' }
+                        contents: [{
+                            parts: [
+                                { text: 'System prompt: You are an expert traffic safety engineer. Provide highly specific, localized, and unique recommendations based on the precise data provided. Avoid generic, repetitive advice.\n\n' + prompt + '\n\nIMPORTANT: Do NOT output generic suggestions. Customize your response heavily based on the provided Road Details and Scores.' }
+                            ]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            responseMimeType: 'application/json'
+                        }
                     })
                 });
 
-                if (groqRes.ok) {
-                    const groqData = await groqRes.json();
-                    const contentStr = groqData.choices?.[0]?.message?.content;
+                if (geminiRes.ok) {
+                    const geminiData = await geminiRes.json();
+                    const contentStr = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (contentStr) {
-                        const parsed = JSON.parse(contentStr);
+                        const cleanStr = contentStr.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+                        const parsed = JSON.parse(cleanStr);
                         if (parsed.corrections && Array.isArray(parsed.corrections)) {
-                            return res.json({ corrections: parsed.corrections, source: 'groq' });
+                            return res.json({ corrections: parsed.corrections, source: 'gemini' });
                         }
                     }
                 } else {
-                    console.error('Groq API error response:', await groqRes.text());
+                    console.error('Gemini API error response:', await geminiRes.text());
                 }
-            } catch (groqErr) {
-                console.error('Failed calling Groq API, falling back to rule-based logic:', groqErr);
+            } catch (geminiErr) {
+                console.error('Failed calling Gemini API, falling back to rule-based logic:', geminiErr);
             }
         }
 
@@ -294,6 +302,134 @@ Ensure the JSON output is strictly valid and matches the requested schema.`;
 
         const finalCorrections = corrections.slice(0, 3);
         res.json({ corrections: finalCorrections, source: 'fallback' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+router.get('/accidents/:id/analysis', async (req, res) => {
+    try {
+        const accidentId = parseInt(req.params.id, 10);
+        if (isNaN(accidentId)) return res.status(400).json({ error: 'Invalid ID' });
+
+        const queryStr = `
+            SELECT a.*, rs.speed_limit, rd.name as road_name
+            FROM accidents a
+            LEFT JOIN road_segments rs ON a.segment_id = rs.id
+            LEFT JOIN roads rd ON rs.road_id = rd.id
+            WHERE a.id = $1
+        `;
+
+        const result = await query(queryStr, [accidentId]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Accident not found' });
+        }
+
+        const accident = result.rows[0];
+        const apiKeyEnv = process.env.GEMINI_API_KEY;
+
+        if (apiKeyEnv) {
+            try {
+                // Split keys if comma separated and pick one randomly
+                const apiKeys = apiKeyEnv.split(',').map(k => k.trim()).filter(k => k.length > 0);
+                const apiKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
+
+                const prompt = `You are an expert traffic safety investigator analyzing a road traffic accident.
+Accident Details:
+- ID: ${accident.id}
+- Date/Time: ${new Date(accident.date).toLocaleDateString()} ${accident.time || ''}
+- Severity: ${accident.severity}
+- Fatalities: ${accident.fatalities}
+- Injuries: ${accident.injuries}
+- Vehicle Type: ${accident.vehicle_type || 'Unknown'}
+- Collision Type: ${accident.collision_type || 'Unknown'}
+Location Context:
+- Road Name: ${accident.road_name || 'Unknown Road'}
+- Speed Limit: ${accident.speed_limit || 'Unknown'} km/h
+
+Generate exactly 3 specific, highly-actionable safety mitigation measures or investigations that should be done at this site to prevent similar accidents.
+Format your output as a JSON object with a single key "corrections", containing an array of 3 objects. Each object must have these exact keys:
+- "category": Short category (e.g., "Enforcement", "Infrastructure", "Visibility")
+- "action": Precise, professional safety correction to implement
+- "impact": Expected safety impact (e.g., "High", "Medium", "Low")
+- "cost": Relative cost (e.g., "Low", "Medium", "High")
+
+Ensure the JSON output is strictly valid and matches the requested schema.`;
+
+                const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.7, responseMimeType: 'application/json' }
+                    })
+                });
+
+                if (geminiRes.ok) {
+                    const geminiData = await geminiRes.json();
+                    const contentStr = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (contentStr) {
+                        const cleanStr = contentStr.replace(/\`\`\`json\n?/g, '').replace(/\`\`\`/g, '').trim();
+                        const parsed = JSON.parse(cleanStr);
+                        if (parsed.corrections && Array.isArray(parsed.corrections)) {
+                            return res.json({ corrections: parsed.corrections, source: 'gemini' });
+                        }
+                    }
+                } else {
+                    console.error('Gemini API error response:', await geminiRes.text());
+                }
+            } catch (geminiErr) {
+                console.error('Failed calling Gemini API, falling back to rule-based logic:', geminiErr);
+            }
+        }
+
+        // Rule-Based Fallback logic
+        const corrections: any[] = [];
+        
+        if (accident.severity === 'Fatal' || accident.severity === 'Serious') {
+            corrections.push({
+                category: 'Crash Investigation',
+                action: 'Conduct an immediate multi-disciplinary crash investigation (MCI) to identify contributing factors and engineering defects.',
+                impact: 'High',
+                cost: 'Medium'
+            });
+        }
+        if (accident.collision_type && accident.collision_type.includes('Pedestrian')) {
+            corrections.push({
+                category: 'Pedestrian Safety',
+                action: 'Install raised pedestrian crossings, enhance street lighting, and construct safe pedestrian refuge islands at the crash site.',
+                impact: 'High',
+                cost: 'Medium'
+            });
+        } else if (accident.collision_type && accident.collision_type.includes('Rear')) {
+            corrections.push({
+                category: 'Speed Calming',
+                action: 'Apply transverse bar markings and advanced warning signs to alert drivers of intersection or queueing ahead.',
+                impact: 'Medium',
+                cost: 'Low'
+            });
+        }
+
+        if (corrections.length < 3) {
+            corrections.push({
+                category: 'Enforcement',
+                action: 'Increase targeted traffic police patrols and deploy mobile speed cameras during peak hours to deter reckless driving.',
+                impact: 'High',
+                cost: 'Low'
+            });
+        }
+        if (corrections.length < 3) {
+            corrections.push({
+                category: 'Visibility',
+                action: 'Clear vegetation and obstacles blocking sightlines at nearby junctions, and refresh all road markings with retroreflective paint.',
+                impact: 'Medium',
+                cost: 'Low'
+            });
+        }
+
+        res.json({ corrections: corrections.slice(0, 3), source: 'fallback' });
 
     } catch (err) {
         console.error(err);
